@@ -1,0 +1,67 @@
+<?php
+	$currentUrl = Mage::helper('core/url')->getCurrentUrl(); // getting current url
+	$base = Mage::getBaseUrl(); // getting store url
+	$searchText = str_replace($base, "", $currentUrl); //getting the diference between both urls
+	$searchText = str_replace("-", " ", $searchText); // replacing slash by spaces
+	$query = Mage::getModel('catalogsearch/query')->loadByQueryText($searchText); // search
+	$query->setStoreId(1); // store id
+	$query = Mage::getModel('catalogsearch/query')->setQueryText($searchText)->prepare();
+	$fulltextResource = Mage::getResourceModel('catalogsearch/fulltext')->prepareResult(
+			Mage::getModel('catalogsearch/fulltext'), 
+			$searchText, 
+			$query
+			);
+	$collection = Mage::getResourceModel('catalog/product_collection');
+	$collection->getSelect()->joinInner(
+				array('search_result' => $collection->getTable('catalogsearch/result')),
+				$collection->getConnection()->quoteInto(
+					'search_result.product_id=e.entity_id AND search_result.query_id=?',
+					$query->getId()
+				),
+				array('relevance' => 'relevance')
+			);
+	//var_dump($collection->getFirstItem()->getData());
+	$collection->addAttributeToFilter('status',1); // get avaliable products
+	$collection->addAttributeToFilter('is_in_stock', array('eq' => 1)); // only in stock
+	$collection->addAttributeToFilter('visibility',array("neq"=>1));
+	$collection->addAttributeToSelect(array('name','url','small_image', 'price')); // some attributes
+	$collection->getSelect()->order('rand()');   // showing products in random order
+	$collection->addStoreFilter();
+	$max_items = 4; // number of products to show
+	$_count = 0;
+	if($collection->getFirstItem()->getData())
+	{
+		echo '<p>';
+		echo $this->__("Check if the product you're looking for is listed below or use our ");
+		echo "<a href='" . $this->getUrl('catalogsearch/advanced') . "'>";
+		echo $this->__("search");
+		echo "</a>.</p>";
+		foreach ($collection as $_product): ?>
+				<?php $_count++; ?>
+				<div class="col-md-3 col-lg-3 col-sm-3 col-xs-12">
+					<a title="<?php echo $this->htmlEscape($_product->getName()) ?>" href="<?php echo $_product->getProductUrl() ?>"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(150, 150); ?>" width="150" height="150" alt=""></a>
+				<div style="height: 30px; width: 150px; background-color: #CBCDD0;">
+					<div style="height: 30px; width: 30px; background-color: #2E3A47; float: right;">
+						<a href="<?php echo Mage::helper('checkout/cart')->getAddUrl($_product); ?>">
+							<i class="fa fa-shopping-cart" style="font-size: 16px; color: #F0F0F0;  height: 30px; padding: 7px 3px 7px 5px;"></i>
+						</a>
+					</div>
+					<p style="font-size: 11px; text-transform: uppercase;padding: 6px;"><?php echo $this->__("Only "); ?><b><?php echo Mage::helper('core')->currency($_product->getPrice()); ?></b></p>
+				</div>
+				</div>
+				<?php if($_count == $max_items){break;} ?>
+		<?php endforeach; ?>
+<?php }
+	else
+	{
+		echo "<p>";
+		echo $this->__("Use our ");
+		echo "<a href='" . $this->getUrl('catalogsearch/advanced') . "'>";
+		echo $this->__("search");
+		echo "</a> or browse our <a href='" . $this->getUrl('catalog/seo_sitemap/category/') . "'>";
+		echo $this->__("product catalog");
+		echo "</a>";
+		echo ".</p>";
+	}		
+?>
+<div style="clear: both;"></div>
