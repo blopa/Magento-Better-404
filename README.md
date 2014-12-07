@@ -1,6 +1,16 @@
 Magento-Better-404
 ==================
 
-better 404 page for Magento
+Better 404 page for Magento
 
-Add {{block type="core/template" template="page/404.phtml"}} to your 404 cms page and add the file 404.phtml to your template page folder /app/design/frontend/YOURPACKAGE/YOURTEMPLATE/template/page/
+## Instalation
+
+1. Add ```{{block type="core/template" template="page/404.phtml"}}``` to your 404 cms page.
+
+2. Add the file **404.phtml** to your template page folder 
+
+```
+    path/to/magento/app/design/frontend/YOURPACKAGE/YOURTEMPLATE/template/page/
+```
+
+Now you are ready to go!
