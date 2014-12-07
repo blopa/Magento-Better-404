@@ -9,7 +9,8 @@ Better 404 page for Magento
 
 2. Add the file **404.phtml** to your template page folder 
 
-
+```
     path/to/magento/app/design/frontend/YOURPACKAGE/YOURTEMPLATE/template/page/
+```
 
 Now you are ready to go!
