@@ -1,4 +1,8 @@
 <?php
+	//all the styling is done directly in this page, inside each HTML tag.
+	//If you need to customize it, fell free to change any style in this code for your own use.
+?>
+<?php
 	$currentUrl = Mage::helper('core/url')->getCurrentUrl(); // getting current url
 	$base = Mage::getBaseUrl(); // getting store url
 	$searchText = str_replace($base, "", $currentUrl); //getting the diference between both urls
@@ -60,7 +64,9 @@
 		echo $this->__("Use our ");
 		echo "<a href='" . $this->getUrl('catalogsearch/advanced') . "'>";
 		echo $this->__("search");
-		echo "</a> or browse our <a href='" . $this->getUrl('catalog/seo_sitemap/category/') . "'>";
+		echo "</a> ";
+		echo $this->__("or browse our");
+		echo " <a href='" . $this->getUrl('catalog/seo_sitemap/category/') . "'>";
 		echo $this->__("product catalog");
 		echo "</a>";
 		echo ".</p>";
