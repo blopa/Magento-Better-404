@@ -2,6 +2,7 @@ Magento-Better-404
 ==================
 
 Better 404 page for Magento
+This module get the strings from current URL like yourstore.com/COMPUTER-KEYBOARD. The module will grab the words "computer" and "keyboard" and show a search result for this query. Starting on line 28 you can easily choose with parameter to use on the results
 
 ## Screenshot
 
