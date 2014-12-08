@@ -4,6 +4,7 @@ Magento-Better-404
 Better 404 page for Magento
 
 ## Screenshot
+
 ![ScreenShot](https://raw.githubusercontent.com/blopa/Magento-Better-404/master/screenshot/screenshot.jpg)
 
 ## Instalation
