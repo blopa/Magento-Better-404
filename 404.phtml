@@ -41,21 +41,19 @@
 		echo $this->__("search");
 		echo "</a>.</p>";
 		foreach ($collection as $_product): ?>
-			<?php $_count++; ?>
-			<div class="products-display">
-				<a title="<?php echo $this->htmlEscape($_product->getName()) ?>" href="<?php echo $_product->getProductUrl() ?>"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(150, 150); ?>" width="150" height="150" alt=""></a>
-				<div style="height: 30px; width: 150px; background-color: #CBCDD0;">
-					<div style="height: 30px; width: 30px; background-color: #2E3A47; float: right;">
+				<?php $_count++; ?>
+				<div class="col-md-3 col-lg-3 col-sm-3 col-xs-12" style="width: 16%; margin-left: 0.5%;">
+					<a title="<?php echo $this->htmlEscape($_product->getName()) ?>" href="<?php echo $_product->getProductUrl() ?>"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(150, 150); ?>" style="width: 100%;" alt=""></a>
+				<div style="height: 30px; width: 100%; background-color: #CBCDD0;">
+					<div style="height: 30px; width: 30px; background-color: #2E3A47; float: right; padding: 5px 1px;">
 						<a href="<?php echo Mage::helper('checkout/cart')->getAddUrl($_product); ?>">
-							<i class="add-shopping-cart" style="font-size: 16px; color: #F0F0F0;  height: 30px; padding: 7px 3px 7px 5px;">
-								<img src="your-cart-image-here">
-							</i>
+							<i class="" style="font-size: 0.75vw; color: #F0F0F0;  height: 30px;"><?php echo $this->__("Add"); ?></i>
 						</a>
 					</div>
-					<p style="font-size: 11px; text-transform: uppercase;padding: 6px;"><?php echo $this->__("Only "); ?><b><?php echo Mage::helper('core')->currency($_product->getPrice()); ?></b></p>
+					<p style="font-size: 0.73vw; text-transform: uppercase;padding: 6px;"><?php echo $this->__("Only "); ?><b><?php echo Mage::helper('core')->currency($_product->getPrice()); ?></b></p>
 				</div>
-			</div>
-			<?php if($_count == $max_items){break;} ?>
+				</div>
+				<?php if($_count == $max_items){break;} ?>
 		<?php endforeach; ?>
 <?php }
 	else
